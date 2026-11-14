@@ -32,7 +32,7 @@ body {
 }
 
 a { color: inherit; text-decoration: none; }
-button { font: inherit; }
+button, select { font: inherit; }
 
 .wrap {
   max-width: 1160px;
@@ -40,20 +40,27 @@ button { font: inherit; }
   padding: 0 30px;
 }
 
+/* NAVIGATION */
+
 .nav {
   min-height: 76px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid var(--line);
+  gap: 20px;
 }
 
 .brand {
   font: 700 22px 'Space Grotesk', sans-serif;
   letter-spacing: -1px;
+  white-space: nowrap;
 }
 
-.brand em { color: var(--mint); font-style: normal; }
+.brand em {
+  color: var(--mint);
+  font-style: normal;
+}
 
 .links {
   display: flex;
@@ -67,7 +74,8 @@ button { font: inherit; }
   color: var(--muted);
 }
 
-.links a:hover, .footer a:hover { color: var(--mint); }
+.links a:hover,
+.footer a:hover { color: var(--mint); }
 
 .theme {
   border: 1px solid var(--line);
@@ -234,7 +242,8 @@ button { font: inherit; }
   margin: 25px 0 10px;
 }
 
-.tile p, .project p {
+.tile p,
+.project p {
   font-size: 14px;
   color: var(--muted);
 }
@@ -301,7 +310,115 @@ button { font: inherit; }
   font-size: 24px;
 }
 
-/* CAREER TIMELINE */
+/* V5 INTERACTIVE LAB */
+
+.lab-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 24px 0 12px;
+}
+
+.filter-btn {
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 17px;
+  cursor: pointer;
+  transition: all .2s;
+}
+
+.filter-btn:hover {
+  border-color: var(--mint);
+  color: var(--mint);
+}
+
+.filter-btn[aria-pressed="true"] {
+  background: var(--mint);
+  color: var(--bg);
+  border-color: var(--mint);
+  font-weight: 700;
+}
+
+.lab-project[hidden] {
+  display: none !important;
+}
+
+.lab-status {
+  display: inline-block;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 11px;
+  color: var(--muted);
+  margin: 12px 0;
+}
+
+.lab-detail {
+  margin-top: 14px;
+  border-top: 1px solid var(--line);
+  padding-top: 15px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.lab-detail summary {
+  cursor: pointer;
+  color: var(--mint);
+  font-weight: 700;
+}
+
+.lab-detail p { margin: 12px 0; }
+
+.lab-mini {
+  display: grid;
+  gap: 12px;
+  width: 100%;
+}
+
+.lab-mini label {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.lab-mini select {
+  width: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.lab-result {
+  padding: 15px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  font-size: 13px;
+  color: var(--ink);
+  min-height: 90px;
+}
+
+.lab-result strong { color: var(--mint); }
+
+.lab-mini button {
+  background: var(--mint);
+  color: var(--bg);
+  border: 0;
+  border-radius: 8px;
+  padding: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.lab-disclaimer {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* CAREER */
 
 .timeline {
   display: grid;
@@ -411,7 +528,7 @@ body.light .btn.primary {
 
 body.light .node.hot { background: #d7ede5; }
 
-/* MOBILE */
+/* RESPONSIVE */
 
 @media (max-width: 780px) {
   .wrap { padding: 0 20px; }
@@ -444,6 +561,7 @@ body.light .node.hot { background: #d7ede5; }
 
   .diagram { padding: 12px; }
   .node { font-size: 11px; padding: 10px 6px; }
+  .filter-btn { padding: 8px 12px; font-size: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -455,6 +573,8 @@ body.light .node.hot { background: #d7ede5; }
 
 <body>
 <div class="wrap">
+
+<!-- NAVIGATION -->
 
 <nav class="nav">
   <a class="brand" href="#top">
@@ -500,6 +620,7 @@ body.light .node.hot { background: #d7ede5; }
       <a class="btn primary" href="#work">
         Explore the lab ↗
       </a>
+
       <a class="btn" href="#about">
         Get to know me
       </a>
@@ -566,9 +687,10 @@ body.light .node.hot { background: #d7ede5; }
   </div>
 </section>
 
-<!-- PROJECTS -->
+<!-- INTERACTIVE LAB -->
 
 <section id="work" class="section reveal">
+
   <div class="section-head">
     <div>
       <div class="num">02 / INSIDE THE LAB</div>
@@ -576,56 +698,123 @@ body.light .node.hot { background: #d7ede5; }
     </div>
 
     <p class="section-intro">
-      Not a gallery of perfect products.
-      A growing collection of practical experiments
-      and ways of thinking.
+      A growing collection of experiments,
+      practical workflows, and things I'm
+      learning to build.
     </p>
   </div>
 
-  <article class="project">
+  <!-- PROJECT FILTERS -->
+
+  <div class="lab-toolbar" aria-label="Filter projects">
+
+    <button class="filter-btn"
+      data-filter="all" aria-pressed="true">
+      All projects
+    </button>
+
+    <button class="filter-btn"
+      data-filter="ai" aria-pressed="false">
+      AI & Intelligence
+    </button>
+
+    <button class="filter-btn"
+      data-filter="automation" aria-pressed="false">
+      Automation
+    </button>
+
+    <button class="filter-btn"
+      data-filter="web" aria-pressed="false">
+      Web & Learning
+    </button>
+
+  </div>
+
+  <!-- PROJECT 1 -->
+
+  <article class="project lab-project" data-category="ai">
     <div>
       <div class="tag">
         AI-assisted workflow / Exploration
       </div>
 
-      <h3>RFP intelligence</h3>
+      <h3>RFP Intelligence</h3>
 
       <p>
         Exploring how AI can help discover relevant
-        opportunities, organize procurement information,
+        procurement opportunities, organize information,
         and make early-stage qualification less repetitive.
       </p>
 
       <p>
-        The interesting part isn't simply finding a tender —
-        it's connecting the opportunity to the right context
-        and next action.
+        The interesting part isn't simply finding
+        a tender — it's connecting the opportunity
+        to the right context and next action.
       </p>
 
       <div class="meta">
         Focus: Research · Qualification · AI workflows
       </div>
+
+      <span class="lab-status">
+        Ongoing exploration
+      </span>
+
+      <details class="lab-detail">
+        <summary>
+          Explore the thinking behind this project
+        </summary>
+
+        <p>
+          <strong>Challenge:</strong>
+          Procurement opportunities are scattered
+          across different sources. Reviewing
+          them manually takes time.
+        </p>
+
+        <p>
+          <strong>Approach:</strong>
+          Explore AI-assisted discovery,
+          information extraction, and
+          structured qualification.
+        </p>
+
+        <p>
+          <strong>What I'm learning:</strong>
+          AI can support research and analysis,
+          but important commercial and compliance
+          decisions still need human verification.
+        </p>
+      </details>
     </div>
 
     <div class="diagram">
       <div class="node">
         Discover<br>opportunities
       </div>
+
       <div class="arrow">→</div>
+
       <div class="node hot">
         AI-assisted<br>review
       </div>
+
       <div class="arrow">→</div>
+
       <div class="node">
         Human<br>decision
       </div>
     </div>
   </article>
 
-  <article class="project">
+  <!-- PROJECT 2 -->
+
+  <article class="project lab-project"
+           data-category="automation">
+
     <div>
       <div class="tag">
-        Workflow design / Exploration
+        Workflow Design / Interactive Demo
       </div>
 
       <h3>A clearer view of work</h3>
@@ -645,27 +834,85 @@ body.light .node.hot { background: #d7ede5; }
       <div class="meta">
         Focus: Workflow clarity · Reporting · Automation
       </div>
+
+      <span class="lab-status">
+        Interactive sample
+      </span>
+
+      <details class="lab-detail">
+        <summary>Why this matters</summary>
+
+        <p>
+          <strong>Challenge:</strong>
+          Important updates can be lost
+          across tools and conversations.
+        </p>
+
+        <p>
+          <strong>Approach:</strong>
+          Bring signals into a consistent view,
+          then highlight a sensible next step.
+        </p>
+
+        <p>
+          <strong>Learning:</strong>
+          Useful workflows need clear ownership
+          and context, not simply more dashboards.
+        </p>
+      </details>
     </div>
 
+    <!-- WORKFLOW SIMULATOR -->
+
     <div class="diagram">
-      <div class="node">
-        Signals<br>& updates
-      </div>
-      <div class="arrow">→</div>
-      <div class="node hot">
-        One useful<br>view
-      </div>
-      <div class="arrow">→</div>
-      <div class="node">
-        Next<br>actions
+      <div class="lab-mini">
+
+        <label for="signal">
+          Try a fictional workflow scenario
+        </label>
+
+        <select id="signal">
+
+          <option value="reply">
+            A contact replies asking for details
+          </option>
+
+          <option value="meeting">
+            A discovery meeting is completed
+          </option>
+
+          <option value="pending">
+            A proposal is awaiting feedback
+          </option>
+
+        </select>
+
+        <button id="simulate" type="button">
+          Suggest next step →
+        </button>
+
+        <div class="lab-result"
+             id="simulation-output"
+             aria-live="polite">
+          Choose a scenario and explore
+          a possible next step.
+        </div>
+
+        <div class="lab-disclaimer">
+          Illustrative logic only.
+          No live AI, CRM, or personal data is connected.
+        </div>
+
       </div>
     </div>
   </article>
 
-  <article class="project">
+  <!-- PROJECT 3 -->
+
+  <article class="project lab-project" data-category="web">
     <div>
       <div class="tag">
-        Web / Learning in public
+        Web / Learning in Public
       </div>
 
       <h3>This website is a project, too.</h3>
@@ -685,6 +932,21 @@ body.light .node.hot { background: #d7ede5; }
         Tools: HTML · CSS · GitHub · Vercel
       </div>
 
+      <span class="lab-status">
+        Live personal project
+      </span>
+
+      <details class="lab-detail">
+        <summary>What I'm learning</summary>
+
+        <p>
+          How a simple website is structured,
+          how version control works, and how
+          changes move from GitHub to a live
+          Vercel deployment.
+        </p>
+      </details>
+
       <div class="actions">
         <a class="btn"
           href="https://github.com/aqeelghouzul/aqeel-portfolio"
@@ -703,6 +965,7 @@ body.light .node.hot { background: #d7ede5; }
       <div class="node">Live on<br>Vercel</div>
     </div>
   </article>
+
 </section>
 
 <!-- CAREER JOURNEY -->
@@ -782,7 +1045,7 @@ body.light .node.hot { background: #d7ede5; }
   </div>
 </section>
 
-<!-- EDUCATION AND LEARNING -->
+<!-- EDUCATION -->
 
 <section id="learning" class="section reveal">
   <div class="section-head">
@@ -848,7 +1111,8 @@ body.light .node.hot { background: #d7ede5; }
   <div class="contact-links">
     <a class="btn primary"
       href="https://calendar.app.google/jFF8RCkmWHjS6BME6"
-      target="_blank" rel="noopener noreferrer">
+      target="_blank"
+      rel="noopener noreferrer">
       Let's connect ↗
     </a>
 
@@ -859,13 +1123,15 @@ body.light .node.hot { background: #d7ede5; }
 
     <a class="btn"
       href="https://www.linkedin.com/in/aqeel-ghouzul-58bb83218/"
-      target="_blank" rel="noopener noreferrer">
+      target="_blank"
+      rel="noopener noreferrer">
       LinkedIn ↗
     </a>
 
     <a class="btn"
       href="https://github.com/aqeelghouzul"
-      target="_blank" rel="noopener noreferrer">
+      target="_blank"
+      rel="noopener noreferrer">
       GitHub ↗
     </a>
   </div>
@@ -876,6 +1142,8 @@ body.light .node.hot { background: #d7ede5; }
 </section>
 
 </main>
+
+<!-- FOOTER -->
 
 <footer class="footer">
   <span>
@@ -896,8 +1164,13 @@ body.light .node.hot { background: #d7ede5; }
 </div>
 
 <script>
+
+// CURRENT YEAR
+
 document.getElementById('year').textContent =
   new Date().getFullYear();
+
+// THEME SWITCHER
 
 const themeButton = document.getElementById('theme');
 
@@ -907,6 +1180,8 @@ themeButton.addEventListener('click', () => {
   themeButton.textContent =
     document.body.classList.contains('light') ? '☾' : '☼';
 });
+
+// SCROLL ANIMATIONS
 
 if ('IntersectionObserver' in window) {
   const observer = new IntersectionObserver(entries => {
@@ -926,6 +1201,64 @@ if ('IntersectionObserver' in window) {
     element.classList.add('show');
   });
 }
+
+// V5 PROJECT FILTERS
+
+document.querySelectorAll('.filter-btn').forEach(button => {
+  button.addEventListener('click', () => {
+    const filter = button.dataset.filter;
+
+    document.querySelectorAll('.filter-btn').forEach(item => {
+      item.setAttribute(
+        'aria-pressed',
+        String(item === button)
+      );
+    });
+
+    document.querySelectorAll('.lab-project').forEach(project => {
+      project.hidden =
+        filter !== 'all' &&
+        project.dataset.category !== filter;
+    });
+  });
+});
+
+// V5 WORKFLOW SIMULATOR
+// Fictional examples, not a live AI integration.
+
+const scenarios = {
+  reply: [
+    'New response received',
+    'Review the request, clarify the requirements, and suggest a short discussion.'
+  ],
+
+  meeting: [
+    'Discovery completed',
+    'Summarize the problem, confirm key requirements, and agree on the next action.'
+  ],
+
+  pending: [
+    'Feedback outstanding',
+    'Check the agreed follow-up date and send a concise, relevant check-in.'
+  ]
+};
+
+document.getElementById('simulate').addEventListener('click', () => {
+  const selected = document.getElementById('signal').value;
+  const [heading, next] = scenarios[selected];
+  const output = document.getElementById('simulation-output');
+
+  output.replaceChildren();
+
+  const title = document.createElement('strong');
+  title.textContent = heading;
+
+  const paragraph = document.createElement('p');
+  paragraph.textContent = next;
+
+  output.append(title, paragraph);
+});
+
 </script>
 
 </body>
