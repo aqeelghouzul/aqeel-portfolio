@@ -21,7 +21,6 @@
 }
 
 * { box-sizing: border-box; }
-
 html { scroll-behavior: smooth; }
 
 body {
@@ -58,8 +57,9 @@ button { font: inherit; }
 
 .links {
   display: flex;
-  gap: 24px;
+  gap: 22px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .links a {
@@ -67,8 +67,7 @@ button { font: inherit; }
   color: var(--muted);
 }
 
-.links a:hover,
-.footer a:hover { color: var(--mint); }
+.links a:hover, .footer a:hover { color: var(--mint); }
 
 .theme {
   border: 1px solid var(--line);
@@ -137,60 +136,46 @@ button { font: inherit; }
   color: #10231e;
 }
 
-/* ORBIT GRAPHIC */
+/* PROFILE PHOTO */
 
-.orbit {
+.portrait-wrap {
   position: relative;
-  aspect-ratio: 1;
-  border: 1px solid #31475b;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: radial-gradient(
-    circle, #1a3542 0%, #111e2d 40%, transparent 70%
-  );
+  max-width: 385px;
+  margin: auto;
+  width: 100%;
 }
 
-.orbit::before,
-.orbit::after {
+.portrait-wrap::before {
   content: "";
   position: absolute;
-  inset: 17%;
-  border: 1px dashed #40566a;
-  border-radius: 50%;
+  inset: 18px -14px -14px 18px;
+  border: 1px solid var(--mint);
+  border-radius: 22px;
+  opacity: .6;
 }
 
-.orbit::after {
-  inset: 34%;
-  border-style: solid;
+.portrait {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4/5;
+  object-fit: cover;
+  object-position: center 24%;
+  border-radius: 20px;
+  position: relative;
+  border: 1px solid var(--line);
 }
 
-.center-dot {
-  width: 108px;
-  height: 108px;
-  border-radius: 24px;
-  background: var(--mint);
-  display: grid;
-  place-items: center;
-  color: #0c2321;
-  font: 700 32px 'Space Grotesk';
-  transform: rotate(-9deg);
-  box-shadow: 0 18px 70px #a4f2d322;
-}
-
-.sat {
+.portrait-label {
   position: absolute;
-  padding: 8px 13px;
-  border: 1px solid #395369;
-  border-radius: 100px;
-  background: #182b3c;
-  color: #d8e6f3;
+  bottom: 18px;
+  left: -18px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 10px 15px;
   font-size: 12px;
+  color: var(--mint);
 }
-
-.s1 { top: 12%; left: 8%; }
-.s2 { right: -4%; top: 38%; }
-.s3 { bottom: 11%; left: 14%; }
 
 /* SECTIONS */
 
@@ -249,8 +234,7 @@ button { font: inherit; }
   margin: 25px 0 10px;
 }
 
-.tile p,
-.project p {
+.tile p, .project p {
   font-size: 14px;
   color: var(--muted);
 }
@@ -281,7 +265,7 @@ button { font: inherit; }
 
 .project .meta {
   font-size: 12px;
-  color: #d1dded;
+  color: var(--muted);
   margin-top: 20px;
 }
 
@@ -317,7 +301,7 @@ button { font: inherit; }
   font-size: 24px;
 }
 
-/* JOURNEY */
+/* CAREER TIMELINE */
 
 .timeline {
   display: grid;
@@ -352,6 +336,14 @@ button { font: inherit; }
   color: var(--ink);
 }
 
+.learning {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.learning .tile { min-height: 0; }
+
 /* CONTACT */
 
 .contact {
@@ -366,8 +358,14 @@ button { font: inherit; }
 }
 
 .contact h2 span { color: var(--mint); }
-
 .contact p { color: var(--muted); }
+
+.contact-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
 
 .footer {
   display: flex;
@@ -381,7 +379,7 @@ button { font: inherit; }
 
 .footer a { margin-left: 16px; }
 
-/* ANIMATION */
+/* ANIMATIONS */
 
 .reveal {
   opacity: 0;
@@ -394,7 +392,7 @@ button { font: inherit; }
   transform: none;
 }
 
-/* LIGHT MODE */
+/* LIGHT THEME */
 
 body.light {
   --bg: #f5f7fb;
@@ -403,20 +401,6 @@ body.light {
   --muted: #53647a;
   --line: #cbd6e3;
   --mint: #157f65;
-}
-
-body.light .orbit {
-  background: radial-gradient(circle, #d9eee8, transparent 75%);
-}
-
-body.light .sat {
-  background: #e6eff4;
-  color: #25364c;
-}
-
-body.light .center-dot {
-  background: #167d65;
-  color: white;
 }
 
 body.light .btn.primary {
@@ -431,27 +415,33 @@ body.light .node.hot { background: #d7ede5; }
 
 @media (max-width: 780px) {
   .wrap { padding: 0 20px; }
+  .nav { padding: 15px 0; gap: 14px; }
   .links { gap: 12px; }
   .links a { font-size: 12px; }
+
   .hero {
     grid-template-columns: 1fr;
     padding: 75px 0 65px;
     min-height: auto;
   }
+
   .hero h1 { letter-spacing: -2px; }
-  .orbit { width: min(80%, 330px); margin: auto; }
+  .portrait-wrap { max-width: 330px; }
+  .portrait-label { left: 0; }
   .three { grid-template-columns: 1fr; }
   .project { grid-template-columns: 1fr; gap: 20px; }
   .section { padding: 65px 0; }
   .section-head { display: block; }
   .timeline { grid-template-columns: 1fr; gap: 5px; }
+  .learning { grid-template-columns: 1fr; }
   .footer { flex-direction: column; }
   .footer a { margin: 0 16px 0 0; }
 }
 
 @media (max-width: 420px) {
-  .links a:nth-child(2) { display: none; }
-  .orbit { width: 90%; }
+  .links a:nth-child(2),
+  .links a:nth-child(4) { display: none; }
+
   .diagram { padding: 12px; }
   .node { font-size: 11px; padding: 10px 6px; }
 }
@@ -464,322 +454,444 @@ body.light .node.hot { background: #d7ede5; }
 </head>
 
 <body>
-
 <div class="wrap">
 
-  <nav class="nav">
-    <a class="brand" href="#top">aqeel<em>labs.</em></a>
+<nav class="nav">
+  <a class="brand" href="#top">
+    aqeel<em>labs.</em>
+  </a>
 
-    <div class="links">
-      <a href="#about">About</a>
-      <a href="#work">Lab notes</a>
-      <a href="#journey">Journey</a>
-      <a href="#contact">Connect</a>
-      <button class="theme" id="theme"
-        aria-label="Toggle light and dark theme">☼</button>
+  <div class="links">
+    <a href="#about">About</a>
+    <a href="#work">Lab notes</a>
+    <a href="#journey">Journey</a>
+    <a href="#learning">Learning</a>
+    <a href="#contact">Connect</a>
+
+    <button class="theme" id="theme"
+      aria-label="Toggle light and dark theme">☼</button>
+  </div>
+</nav>
+
+<main id="top">
+
+<!-- HERO -->
+
+<section class="hero">
+  <div>
+    <div class="eyebrow">
+      Aqeel Ghouzul / Solutions Manager / AI & Technology
     </div>
-  </nav>
 
-  <main id="top">
+    <h1>
+      I connect<br>
+      the dots.<br>
+      <span>Then explore<br>what's possible.</span>
+    </h1>
 
-    <!-- HERO -->
-    <section class="hero">
-      <div>
-        <div class="eyebrow">
-          Aqeel Ghouzul / Solutions Manager / AI & Technology
-        </div>
+    <p class="lead">
+      I work at the intersection of business challenges,
+      experience technology, and emerging AI.
+      This is my space to document ideas, useful experiments,
+      and what I learn along the way.
+    </p>
 
-        <h1>
-          I connect<br>
-          the dots.<br>
-          <span>Then explore<br>what's possible.</span>
-        </h1>
+    <div class="actions">
+      <a class="btn primary" href="#work">
+        Explore the lab ↗
+      </a>
+      <a class="btn" href="#about">
+        Get to know me
+      </a>
+    </div>
+  </div>
 
-        <p class="lead">
-          I work at the intersection of business challenges,
-          experience technology, and emerging AI.
-          This is my space to document ideas, useful experiments,
-          and what I learn along the way.
-        </p>
+  <div class="portrait-wrap">
+    <img
+      class="portrait"
+      src="Aqeel_AI_Generated.png"
+      alt="Portrait of Aqeel Ghouzul"
+      loading="eager"
+    >
 
-        <div class="actions">
-          <a class="btn primary" href="#work">
-            Explore the lab ↗
-          </a>
-          <a class="btn" href="#about">
-            Get to know me
-          </a>
-        </div>
+    <div class="portrait-label">
+      Colombo, Sri Lanka · Always learning ✳
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+
+<section id="about" class="section reveal">
+  <div class="section-head">
+    <div>
+      <div class="num">01 / THE THINKING</div>
+      <h2>More than a job title.</h2>
+    </div>
+
+    <p class="section-intro">
+      My starting point is usually a question:
+      what's the actual problem, and what would make it easier?
+    </p>
+  </div>
+
+  <div class="three">
+    <article class="tile">
+      <div class="symbol">↗</div>
+      <h3>Understand</h3>
+      <p>
+        Listen, ask better questions, and make sense
+        of the challenge before jumping to a solution.
+      </p>
+    </article>
+
+    <article class="tile">
+      <div class="symbol">⌘</div>
+      <h3>Connect</h3>
+      <p>
+        Bring together business needs, people,
+        processes, and the technology that can help.
+      </p>
+    </article>
+
+    <article class="tile">
+      <div class="symbol">✳</div>
+      <h3>Experiment</h3>
+      <p>
+        Explore AI, automation, and lightweight
+        digital tools by trying things and learning
+        what works.
+      </p>
+    </article>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+
+<section id="work" class="section reveal">
+  <div class="section-head">
+    <div>
+      <div class="num">02 / INSIDE THE LAB</div>
+      <h2>Ideas in motion.</h2>
+    </div>
+
+    <p class="section-intro">
+      Not a gallery of perfect products.
+      A growing collection of practical experiments
+      and ways of thinking.
+    </p>
+  </div>
+
+  <article class="project">
+    <div>
+      <div class="tag">
+        AI-assisted workflow / Exploration
       </div>
 
-      <div class="orbit" aria-hidden="true">
-        <div class="sat s1">Business</div>
-        <div class="sat s2">Technology</div>
-        <div class="sat s3">Curiosity</div>
-        <div class="center-dot">AG.</div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about" class="section reveal">
-      <div class="section-head">
-        <div>
-          <div class="num">01 / THE THINKING</div>
-          <h2>More than a job title.</h2>
-        </div>
-        <p class="section-intro">
-          My starting point is usually a question:
-          what's the actual problem, and what would make it easier?
-        </p>
-      </div>
-
-      <div class="three">
-        <article class="tile">
-          <div class="symbol">↗</div>
-          <h3>Understand</h3>
-          <p>
-            Listen, ask better questions, and make sense of
-            the challenge before jumping to a solution.
-          </p>
-        </article>
-
-        <article class="tile">
-          <div class="symbol">⌘</div>
-          <h3>Connect</h3>
-          <p>
-            Bring together business needs, people,
-            processes, and the technology that can help.
-          </p>
-        </article>
-
-        <article class="tile">
-          <div class="symbol">✳</div>
-          <h3>Experiment</h3>
-          <p>
-            Explore AI, automation, and lightweight digital
-            tools by trying things and learning what works.
-          </p>
-        </article>
-      </div>
-    </section>
-
-    <!-- PROJECTS -->
-    <section id="work" class="section reveal">
-      <div class="section-head">
-        <div>
-          <div class="num">02 / INSIDE THE LAB</div>
-          <h2>Ideas in motion.</h2>
-        </div>
-        <p class="section-intro">
-          Not a gallery of perfect products.
-          A growing collection of practical experiments
-          and ways of thinking.
-        </p>
-      </div>
-
-      <article class="project">
-        <div>
-          <div class="tag">AI-assisted workflow / Exploration</div>
-          <h3>RFP intelligence</h3>
-
-          <p>
-            Exploring how AI can help discover relevant
-            opportunities, organize procurement information,
-            and make early-stage qualification less repetitive.
-          </p>
-
-          <p>
-            The interesting part isn't simply finding a tender —
-            it's connecting the opportunity to the right context
-            and next action.
-          </p>
-
-          <div class="meta">
-            Focus: Research · Qualification · AI workflows
-          </div>
-        </div>
-
-        <div class="diagram">
-          <div class="node">Discover<br>opportunities</div>
-          <div class="arrow">→</div>
-          <div class="node hot">AI-assisted<br>review</div>
-          <div class="arrow">→</div>
-          <div class="node">Human<br>decision</div>
-        </div>
-      </article>
-
-      <article class="project">
-        <div>
-          <div class="tag">Workflow design / Exploration</div>
-          <h3>A clearer view of work</h3>
-
-          <p>
-            Thinking about how scattered sales activity,
-            updates, and priorities can become a simpler
-            daily view — with less manual reporting
-            and more useful context.
-          </p>
-
-          <p>
-            A practical intersection of process design,
-            automation, and decision-making.
-          </p>
-
-          <div class="meta">
-            Focus: Workflow clarity · Reporting · Automation
-          </div>
-        </div>
-
-        <div class="diagram">
-          <div class="node">Signals<br>& updates</div>
-          <div class="arrow">→</div>
-          <div class="node hot">One useful<br>view</div>
-          <div class="arrow">→</div>
-          <div class="node">Next<br>actions</div>
-        </div>
-      </article>
-
-      <article class="project">
-        <div>
-          <div class="tag">Web / Learning in public</div>
-          <h3>This website is a project, too.</h3>
-
-          <p>
-            Aqeel Labs began as a simple HTML page.
-            Building and publishing it with GitHub
-            and Vercel is part of my journey toward
-            becoming more hands-on with technology.
-          </p>
-
-          <p>I'll keep improving it as I learn.</p>
-
-          <div class="meta">
-            Tools: HTML · CSS · GitHub · Vercel
-          </div>
-
-          <div class="actions">
-            <a class="btn"
-              href="https://github.com/aqeelghouzul/aqeel-portfolio"
-              target="_blank" rel="noopener noreferrer">
-              View repository ↗
-            </a>
-          </div>
-        </div>
-
-        <div class="diagram">
-          <div class="node">Write<br>code</div>
-          <div class="arrow">→</div>
-          <div class="node hot">GitHub</div>
-          <div class="arrow">→</div>
-          <div class="node">Live on<br>Vercel</div>
-        </div>
-      </article>
-    </section>
-
-    <!-- JOURNEY -->
-    <section id="journey" class="section reveal">
-      <div class="section-head">
-        <div>
-          <div class="num">03 / THE JOURNEY</div>
-          <h2>
-            Where I come from.<br>
-            Where I'm heading.
-          </h2>
-        </div>
-      </div>
-
-      <div class="timeline">
-        <div class="date">NOW</div>
-        <div>
-          <h3>Solutions Manager · Emojot</h3>
-          <p>
-            Working across discovery, solution discussions,
-            demonstrations, proposals, and collaboration
-            with technical and delivery teams —
-            particularly around experience intelligence
-            and AI-powered solutions.
-          </p>
-        </div>
-      </div>
-
-      <div class="timeline">
-        <div class="date">BEFORE</div>
-        <div>
-          <h3>Business development & account-facing roles</h3>
-          <p>
-            Built experience understanding customer needs,
-            navigating different industries, and translating
-            conversations into workable solutions.
-          </p>
-        </div>
-      </div>
-
-      <div class="timeline">
-        <div class="date">WHAT'S NEXT</div>
-        <div>
-          <h3>More hands-on with technology</h3>
-          <p>
-            Developing practical skills in AI agents,
-            automations, integrations, and simple web
-            applications — one useful project at a time.
-          </p>
-        </div>
-      </div>
-
-      <div class="note" style="margin-top:34px">
-        “Stay curious. Understand the problem.
-        Build something useful.”
-        <div style="font-size:12px;color:var(--muted)">
-          A principle behind Aqeel Labs
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="contact reveal">
-      <div class="num">04 / KEEP IN TOUCH</div>
-
-      <h2>
-        Good ideas start with
-        <span>a conversation.</span>
-      </h2>
+      <h3>RFP intelligence</h3>
 
       <p>
-        Always interested in thoughtful conversations
-        about technology, experiences, and practical ideas.
+        Exploring how AI can help discover relevant
+        opportunities, organize procurement information,
+        and make early-stage qualification less repetitive.
       </p>
 
-      <div class="actions">
-        <a class="btn primary"
-          href="https://www.linkedin.com/in/aqeel-ghouzul-58bb83218/"
-          target="_blank" rel="noopener noreferrer">
-          Connect on LinkedIn ↗
-        </a>
+      <p>
+        The interesting part isn't simply finding a tender —
+        it's connecting the opportunity to the right context
+        and next action.
+      </p>
 
+      <div class="meta">
+        Focus: Research · Qualification · AI workflows
+      </div>
+    </div>
+
+    <div class="diagram">
+      <div class="node">
+        Discover<br>opportunities
+      </div>
+      <div class="arrow">→</div>
+      <div class="node hot">
+        AI-assisted<br>review
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        Human<br>decision
+      </div>
+    </div>
+  </article>
+
+  <article class="project">
+    <div>
+      <div class="tag">
+        Workflow design / Exploration
+      </div>
+
+      <h3>A clearer view of work</h3>
+
+      <p>
+        Thinking about how scattered sales activity,
+        updates, and priorities can become a simpler
+        daily view — with less manual reporting
+        and more useful context.
+      </p>
+
+      <p>
+        A practical intersection of process design,
+        automation, and decision-making.
+      </p>
+
+      <div class="meta">
+        Focus: Workflow clarity · Reporting · Automation
+      </div>
+    </div>
+
+    <div class="diagram">
+      <div class="node">
+        Signals<br>& updates
+      </div>
+      <div class="arrow">→</div>
+      <div class="node hot">
+        One useful<br>view
+      </div>
+      <div class="arrow">→</div>
+      <div class="node">
+        Next<br>actions
+      </div>
+    </div>
+  </article>
+
+  <article class="project">
+    <div>
+      <div class="tag">
+        Web / Learning in public
+      </div>
+
+      <h3>This website is a project, too.</h3>
+
+      <p>
+        Aqeel Labs began as a simple HTML page.
+        Building and publishing it with GitHub
+        and Vercel is part of my journey toward
+        becoming more hands-on with technology.
+      </p>
+
+      <p>
+        I'll keep improving it as I learn.
+      </p>
+
+      <div class="meta">
+        Tools: HTML · CSS · GitHub · Vercel
+      </div>
+
+      <div class="actions">
         <a class="btn"
-          href="https://github.com/aqeelghouzul"
-          target="_blank" rel="noopener noreferrer">
-          GitHub ↗
+          href="https://github.com/aqeelghouzul/aqeel-portfolio"
+          target="_blank"
+          rel="noopener noreferrer">
+          View repository ↗
         </a>
       </div>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <span>
-      © <span id="year">2026</span> Aqeel Ghouzul ·
-      An evolving personal lab.
-    </span>
-
-    <div>
-      <a href="https://www.linkedin.com/in/aqeel-ghouzul-58bb83218/"
-        target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href="https://github.com/aqeelghouzul"
-        target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a href="#top">Top ↑</a>
     </div>
-  </footer>
+
+    <div class="diagram">
+      <div class="node">Write<br>code</div>
+      <div class="arrow">→</div>
+      <div class="node hot">GitHub</div>
+      <div class="arrow">→</div>
+      <div class="node">Live on<br>Vercel</div>
+    </div>
+  </article>
+</section>
+
+<!-- CAREER JOURNEY -->
+
+<section id="journey" class="section reveal">
+  <div class="section-head">
+    <div>
+      <div class="num">03 / THE JOURNEY</div>
+      <h2>
+        From conversations<br>to solutions.
+      </h2>
+    </div>
+
+    <p class="section-intro">
+      A career that began in business development
+      and grew into connecting enterprise needs
+      with practical technology.
+    </p>
+  </div>
+
+  <div class="timeline">
+    <div class="date">JAN 2026 — PRESENT</div>
+    <div>
+      <h3>Solutions Manager · Emojot</h3>
+      <p>
+        Working with enterprise stakeholders to understand
+        their challenges, shape solutions, lead discovery
+        and demonstrations, and collaborate across business
+        and technical teams. My work spans experience
+        intelligence, AI-powered insights and digital
+        transformation.
+      </p>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="date">SEP 2025 — JAN 2026</div>
+    <div>
+      <h3>Associate Account Executive · APAC</h3>
+      <p>
+        Supported enterprise and mid-market accounts
+        across APAC, connecting customer requirements
+        with product demonstrations, solution discussions
+        and coordinated delivery.
+      </p>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="date">JUN — AUG 2025</div>
+    <div>
+      <h3>Regional Business Development Associate · APAC</h3>
+      <p>
+        Developed an understanding of different markets
+        and industries through research, discovery
+        conversations and cross-functional collaboration.
+      </p>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="date">MAR — JUN 2025</div>
+    <div>
+      <h3>Business Development Intern · Emojot</h3>
+      <p>
+        Started by learning how to research opportunities,
+        understand customer needs and bring the right
+        people into conversations.
+      </p>
+    </div>
+  </div>
+
+  <div class="note" style="margin-top:34px">
+    The next chapter? More hands-on building —
+    exploring AI agents, automations, integrations
+    and useful web tools, one project at a time.
+  </div>
+</section>
+
+<!-- EDUCATION AND LEARNING -->
+
+<section id="learning" class="section reveal">
+  <div class="section-head">
+    <div>
+      <div class="num">04 / STILL LEARNING</div>
+      <h2>Curiosity, with direction.</h2>
+    </div>
+
+    <p class="section-intro">
+      The classroom gives me foundations.
+      The lab is where I try putting ideas into practice.
+    </p>
+  </div>
+
+  <div class="learning">
+    <article class="tile">
+      <div class="symbol">⌁</div>
+      <h3>Education</h3>
+
+      <p>
+        Higher National Diploma in Information Technology
+        — ESOFT Metro Campus (2025–2026).
+        <br><br>
+        Diploma in Information Technology
+        — ICBT Campus (2024–2025).
+        <br><br>
+        IT Foundation — Wrexham University (2023–2024).
+      </p>
+    </article>
+
+    <article class="tile">
+      <div class="symbol">✳</div>
+      <h3>Currently exploring</h3>
+
+      <p>
+        AI-assisted workflows, automation, APIs,
+        web development and practical solution prototyping.
+        <br><br>
+        Coursework includes Python for Beginners,
+        Introduction to Python, Python Intermediate
+        and Tech for Everyone.
+      </p>
+    </article>
+  </div>
+</section>
+
+<!-- CONTACT -->
+
+<section id="contact" class="contact reveal">
+  <div class="num">05 / SAY HELLO</div>
+
+  <h2>
+    Good ideas start with
+    <span>a conversation.</span>
+  </h2>
+
+  <p>
+    Whether it's technology, a practical problem
+    or an interesting idea, I'm always open
+    to a thoughtful conversation.
+  </p>
+
+  <div class="contact-links">
+    <a class="btn primary"
+      href="https://calendar.app.google/jFF8RCkmWHjS6BME6"
+      target="_blank" rel="noopener noreferrer">
+      Let's connect ↗
+    </a>
+
+    <a class="btn"
+      href="mailto:aqeelghouzul@gmail.com">
+      Email me ↗
+    </a>
+
+    <a class="btn"
+      href="https://www.linkedin.com/in/aqeel-ghouzul-58bb83218/"
+      target="_blank" rel="noopener noreferrer">
+      LinkedIn ↗
+    </a>
+
+    <a class="btn"
+      href="https://github.com/aqeelghouzul"
+      target="_blank" rel="noopener noreferrer">
+      GitHub ↗
+    </a>
+  </div>
+
+  <p style="font-size:13px;margin-top:22px">
+    aqeelghouzul@gmail.com
+  </p>
+</section>
+
+</main>
+
+<footer class="footer">
+  <span>
+    © <span id="year">2026</span> Aqeel Ghouzul ·
+    An evolving personal lab.
+  </span>
+
+  <div>
+    <a href="mailto:aqeelghouzul@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/aqeel-ghouzul-58bb83218/"
+      target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    <a href="https://github.com/aqeelghouzul"
+      target="_blank" rel="noopener noreferrer">GitHub</a>
+    <a href="#top">Top ↑</a>
+  </div>
+</footer>
 
 </div>
 
